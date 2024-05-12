@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="css/home.css">
+
+<ul class="products">
+  <% if (Array.isArray(data) && data.length > 0) { %>
+    <% data.forEach(function(item){ %>
+      <li>
+          <h1>ID: <%= item.id %></h1>
+          <img src="<%= item.url %>" alt="">
+      </li>
+    <% }) %>
+  <% } else { %>
+    <li>No data available</li>
+  <% } %>
+</ul>
+

@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="css/home.css">
+
+<ul class="products">
+  <% if (Array.isArray(data) && data.length > 0) { %>
+    <% data.forEach(function(item){ %>
+      <li>
+          <h1>ID: <%= item.id %></h1>
+          <h1>name: <%= item.name %></h1>
+          <h1>email: <%= item.email %></h1>
+          <ul class="address">
+            <% if (item.address && typeof item.address === 'object') { %>
+              <h1>street: <%= item.address.street %></h1>
+              <h1>suite: <%= item.address.suite %></h1>
+            <% } else { %>
+              <li>No data available</li>
+            <% } %>
+          </ul>
+          <img src="<%= item.url %>" alt="">
+      </li>
+    <% }) %>
+  <% } else { %>
+    <li>No data available</li>
+  <% } %>
+</ul>
+
