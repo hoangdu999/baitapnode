@@ -1,0 +1,15 @@
+
+<link rel="stylesheet" href="css/home.css">
+
+<h1>Home Page</h1>
+<h1>hello anh chị em</h1>
+
+<ul class="products">
+    <% data.forEach(function(item){ %>
+        <li>
+            <h1>ID: <%= item.id %></h1>
+            <h1><%= item.name %></h1>
+            <img src="<%= item.img %>" alt="">
+        </li>
+    <%  }) %>
+</ul>
