@@ -1,10 +1,19 @@
 const categoryModel = require('../models/category.model');
+const categoryValid = require('../validations/category.valid');
 
 module.exports = {
   createcategory: async (req, res) => {
     const body = req.body;
 
-    const category = await categoryModel.create(body);
+    const { error, value } = categoryValid(body);
+    if (error) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: error.message,
+      });
+    }
+
+    const category = await categoryModel.create(value);
 
     return res.status(201).json(category);
   },
@@ -17,7 +26,7 @@ module.exports = {
         $regex: `.*${name}.*`,
       };
     }
-    x;
+
     const categorys = await categoryModel.find(bodyQuery);
 
     return res.status(200).json(categorys);

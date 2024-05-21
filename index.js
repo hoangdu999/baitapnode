@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const connectDB = require('./configs/database');
-const HomeController = require('./controllers/home.controller');
+const HomeController = require('./controllers/product.controller');
 const categoryModel = require('./controllers/category.controller');
 const accountModel = require('./controllers/account.controller');
 
+const router = require('./routers');
 //HTTP method: GET, POST...
 
 app.use(express.json());
@@ -15,16 +16,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
 connectDB();
-
-app.post('/api/products', HomeController.createProduct);
-app.get('/api/products', HomeController.getProducts);
-app.patch('/api/products/:id', HomeController.updateProduct);
-app.delete('/api/products/:id', HomeController.deleteProduct);
-
-app.post('/api/categorys', categoryModel.createcategory);
-app.get('/api/categorys', categoryModel.getcategorys);
-app.patch('/api/categorys/:id', categoryModel.updatecategory);
-app.delete('/api/categorys/:id', categoryModel.deletecategory);
+router(app);
 
 app.post('/api/accounts', accountModel.createaccount);
 app.get('/api/accounts', accountModel.getaccounts);

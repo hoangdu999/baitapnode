@@ -1,4 +1,5 @@
 const ProductModel = require('../models/product.model');
+const { PER_PAGE } = require('../constants/paging');
 
 module.exports = {
   createProduct: async (req, res) => {
@@ -14,6 +15,9 @@ module.exports = {
     const name = req.query.name;
     const fromPrice = req.query.fromPrice;
     const toPrice = req.query.toPrice;
+    const categoryId = req.query.categoryId;
+    const page = req.query.page || 1;
+    const per_page = req.query.per_page || PER_PAGE;
 
     if (name) {
       bodyQuery.name = {
@@ -28,9 +32,29 @@ module.exports = {
       };
     }
 
-    const products = await ProductModel.find(bodyQuery);
+    if (categoryId) {
+      bodyQuery.categoryId = categoryId;
+    }
 
-    return res.status(200).json(products);
+    const products = await ProductModel.find(bodyQuery)
+      .sort({
+        createdAt: -1,
+      })
+      .skip(per_page * page - per_page)
+      .limit(per_page)
+      .exec();
+
+    const count = await ProductModel.countDocuments(bodyQuery);
+
+    const bodyResponse = {
+      current_page: +page,
+      total_page: Math.ceil(count / per_page),
+      count,
+      per_page,
+      data: products,
+    };
+
+    return res.status(200).json(bodyResponse);
   },
   updateProduct: async (req, res) => {
     const productId = req.params.id;
