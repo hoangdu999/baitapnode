@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const cartSchemaValid = Joi.object({
-  is_order: Joi.boolean().min(2).max(20).required().messages({
+  is_order: Joi.boolean().required().messages({
     'any.required': 'K đc bỏ trống',
   }),
 });
