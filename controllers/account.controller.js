@@ -42,7 +42,7 @@ module.exports = {
     return res.status(200).json(accounts);
   },
   updateaccount: async (req, res) => {
-    const accountId = req.params.id;
+    const accountId = req.account._id;
     const body = req.body;
 
     const updatedaccount = await accountModel.findByIdAndUpdate(

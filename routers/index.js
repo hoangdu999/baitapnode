@@ -9,7 +9,7 @@ const authRouter = require('./auth.router');
 
 module.exports = (app) => {
   app.use('/api/auth', authRouter);
-  app.use('/api/categorys', categoryRouter);
+  app.use('/api/categories', categoryRouter);
   app.use('/api/products', foodRouter);
   app.use('/api/accounts', accountRouter);
   app.use('/api/items', itemRouter);

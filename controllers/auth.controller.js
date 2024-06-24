@@ -1,5 +1,8 @@
-const accountModel = require('../models/account.model');
+require('dotenv').config();
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const accountModel = require('../models/account.model');
 const accountValid = require('../validations/account.valid');
 const ErrorResponse = require('../helpers/ErrorResponse');
 
@@ -24,30 +27,29 @@ module.exports = {
     });
 
     if (!account) {
-      // return res.status(400).json({
-      //   statusCode: 400,
-      //   message: 'Tài khoản hoặc mật khẩu không chính xác',
-      // });
       throw new ErrorResponse(401, 'Tài khoản hoặc mật khẩu không chính xác');
     }
 
     const checkPass = bcryptjs.compareSync(password, account.password);
     if (!checkPass) {
-      // return res.status(400).json({
-      //   statusCode: 400,
-      //   message: 'Tài khoản hoặc mật khẩu không chính xác',
-      // });
       throw new ErrorResponse(401, 'Tài khoản hoặc mật khẩu không chính xác');
     }
 
     //mã hóa jwt (json web token)
     // đọc trước jwt
+    const payload = {
+      _id: account._id,
+      username: account.username,
+      role: account.role,
+    };
 
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: process.env.EXPIRES_IN,
+    });
 
     return res.status(200).json({
-      statusCode: 200,
-      message: 'Đăng nhập thành công',
-      data: account,
+      ...payload,
+      jwt: token,
     });
   },
 };
