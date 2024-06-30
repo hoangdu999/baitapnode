@@ -26,7 +26,7 @@ const orderSchemaValid = Joi.object({
     'string.max': 'k quá 20 ký tự',
     'any.required': 'K đc bỏ trống',
   }),
-  is_payment: Joi.boolean().min(2).max(20).required().messages({
+  is_payment: Joi.boolean().required().messages({
     'string.min': ' phải từ 2 ký tự',
     'string.max': 'k quá 20 ký tự',
     'any.required': 'K đc bỏ trống',

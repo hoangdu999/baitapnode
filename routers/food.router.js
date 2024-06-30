@@ -7,9 +7,20 @@ const {
   updatefood,
   deletefood,
 } = require('../controllers/food.controller');
-
-router.route('/').post(createfood).get(getfoods);
-
-router.route('/:id').patch(updatefood).delete(deletefood);
+const asyncMiddleware = require('../middlewares/async.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
+const roleMiddleware = require('../middlewares/role.middleware');
+router
+  .route('/')
+  .post(
+    asyncMiddleware(authMiddleware),
+    roleMiddleware(['admin']),
+    asyncMiddleware(createfood),
+  )
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getfoods));
+router
+  .route('/')
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updatefood))
+  .delete(deletefood);
 
 module.exports = router;

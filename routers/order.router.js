@@ -8,8 +8,22 @@ const {
   deleteorder,
 } = require('../controllers/order.controller');
 
-router.route('/').post(createorder).get(getorders);
+const asyncMiddleware = require('../middlewares/async.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
+const roleMiddleware = require('../middlewares/role.middleware');
 
-router.route('/:id').patch(updateorder).delete(deleteorder);
+router
+  .route('/')
+  .post(
+    asyncMiddleware(authMiddleware),
+    roleMiddleware(['admin']),
+    asyncMiddleware(createorder),
+  )
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getorders));
+
+router
+  .route('/')
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateorder))
+  .delete(deleteorder);
 
 module.exports = router;

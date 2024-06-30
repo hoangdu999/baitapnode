@@ -8,8 +8,17 @@ const {
   deleteaccount,
 } = require('../controllers/account.controller');
 
-router.route('/').post(createaccount).get(getaccounts);
+const asyncMiddleware = require('../middlewares/async.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
 
-router.route('/:id').patch(updateaccount).delete(deleteaccount);
+router
+  .route('/')
+  .post(createaccount)
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getaccounts));
+
+router
+  .route('/')
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateaccount))
+  .delete(deleteaccount);
 
 module.exports = router;

@@ -8,8 +8,21 @@ const {
   deletecart,
 } = require('../controllers/cart.controller');
 
-router.route('/').post(createcart).get(getcarts);
+const asyncMiddleware = require('../middlewares/async.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
+const roleMiddleware = require('../middlewares/role.middleware');
 
-router.route('/:id').patch(updatecart).delete(deletecart);
+router
+  .route('/')
+  .post(
+    asyncMiddleware(authMiddleware),
+    roleMiddleware(['admin']),
+    asyncMiddleware(createcart),
+  )
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getcarts));
+router
+  .route('/')
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updatecart))
+  .delete(deletecart);
 
 module.exports = router;
