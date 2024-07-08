@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  createaccount,
-  getaccounts,
-  updateaccount,
-  deleteaccount,
+  createAccount,
+  getAccounts,
+  updateAccount,
+  deleteAccount,
 } = require('../controllers/account.controller');
 
 const asyncMiddleware = require('../middlewares/async.middleware');
@@ -13,12 +13,12 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 router
   .route('/')
-  .post(createaccount)
-  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getaccounts));
+  .post(createAccount)
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getAccounts));
 
 router
   .route('/')
-  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateaccount))
-  .delete(deleteaccount);
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateAccount))
+  .delete(deleteAccount);
 
 module.exports = router;

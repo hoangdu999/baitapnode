@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  createitem,
-  getitems,
-  updateitem,
-  deleteitem,
+  createItem,
+  getItems,
+  updateItem,
+  deleteItem,
 } = require('../controllers/item.controller');
 const asyncMiddleware = require('../middlewares/async.middleware');
 const authMiddleware = require('../middlewares/auth.middleware');
@@ -15,13 +15,13 @@ router
   .post(
     asyncMiddleware(authMiddleware),
     roleMiddleware(['admin']),
-    asyncMiddleware(createitem),
+    asyncMiddleware(createItem),
   )
-  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getitems));
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getItems));
 
 router
   .route('/')
-  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateitem))
-  .delete(deleteitem);
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateItem))
+  .delete(deleteItem);
 
 module.exports = router;

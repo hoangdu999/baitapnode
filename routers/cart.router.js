@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  createcart,
-  getcarts,
-  updatecart,
-  deletecart,
+  createCart,
+  getCarts,
+  updateCart,
+  deleteCart,
 } = require('../controllers/cart.controller');
 
 const asyncMiddleware = require('../middlewares/async.middleware');
@@ -16,13 +16,13 @@ router
   .route('/')
   .post(
     asyncMiddleware(authMiddleware),
-    roleMiddleware(['admin']),
-    asyncMiddleware(createcart),
+    roleMiddleware(['user']),
+    asyncMiddleware(createCart),
   )
-  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getcarts));
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getCarts));
 router
   .route('/')
-  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updatecart))
-  .delete(deletecart);
+  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updateCart))
+  .delete(deleteCart);
 
 module.exports = router;

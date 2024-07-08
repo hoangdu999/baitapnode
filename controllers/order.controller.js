@@ -2,7 +2,7 @@ const orderModel = require('../models/order.model');
 const orderValid = require('../validations/order.valid');
 
 module.exports = {
-  createorder: async (req, res) => {
+  createOrder: async (req, res) => {
     const body = req.body;
     const { error, value } = orderValid(body);
     if (error) {
@@ -15,14 +15,14 @@ module.exports = {
 
     return res.status(201).json(order);
   },
-  getorders: async (req, res) => {
+  getOrders: async (req, res) => {
     const bodyQuery = {};
 
     const orders = await orderModel.find(bodyQuery);
 
     return res.status(200).json(orders);
   },
-  updateorder: async (req, res) => {
+  updateOrder: async (req, res) => {
     const orderId = req.params.id;
     const body = req.body;
 
@@ -32,7 +32,7 @@ module.exports = {
 
     return res.status(200).json(updatedorder);
   },
-  deleteorder: async (req, res) => {
+  deleteOrder: async (req, res) => {
     const orderId = req.params.id;
 
     const deletedorder = await orderModel.findOneAndDelete({

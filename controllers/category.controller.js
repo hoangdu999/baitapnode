@@ -2,7 +2,7 @@ const categoryModel = require('../models/category.model');
 const categoryValid = require('../validations/category.valid');
 
 module.exports = {
-  createcategory: async (req, res) => {
+  createCategory: async (req, res) => {
     const body = req.body;
 
     const { error, value } = categoryValid(body);
@@ -17,7 +17,7 @@ module.exports = {
 
     return res.status(201).json(category);
   },
-  getcategorys: async (req, res) => {
+  getCategorys: async (req, res) => {
     const bodyQuery = {};
 
     const name = req.query.name;
@@ -31,7 +31,7 @@ module.exports = {
 
     return res.status(200).json(categorys);
   },
-  updatecategory: async (req, res) => {
+  updateCategory: async (req, res) => {
     const categoryId = req.params.id;
     const body = req.body;
 
@@ -45,7 +45,7 @@ module.exports = {
 
     return res.status(200).json(updatedcategory);
   },
-  deletecategory: async (req, res) => {
+  deleteCategory: async (req, res) => {
     const categoryId = req.params.id;
 
     const deletedcategory = await categoryModel.findOneAndDelete({

@@ -2,7 +2,7 @@ const accountModel = require('../models/account.model');
 const accountValid = require('../validations/account.valid');
 
 module.exports = {
-  createaccount: async (req, res) => {
+  createAccount: async (req, res) => {
     const body = req.body;
     const { error, value } = accountValid(body);
     if (error) {
@@ -15,7 +15,7 @@ module.exports = {
 
     return res.status(201).json(account);
   },
-  getaccounts: async (req, res) => {
+  getAccounts: async (req, res) => {
     const bodyQuery = {};
 
     const username = req.query.username;
@@ -41,8 +41,8 @@ module.exports = {
 
     return res.status(200).json(accounts);
   },
-  updateaccount: async (req, res) => {
-    const accountId = req.params.id;
+  updateAccount: async (req, res) => {
+    const accountId = req.account.id;
     const body = req.body;
 
     const updatedaccount = await accountModel.findByIdAndUpdate(
@@ -55,8 +55,8 @@ module.exports = {
 
     return res.status(200).json(updatedaccount);
   },
-  deleteaccount: async (req, res) => {
-    const accountId = req.params.id;
+  deleteAccount: async (req, res) => {
+    const accountId = req.account.id;
 
     const deletedaccount = await accountModel.findOneAndDelete({
       _id: accountId,

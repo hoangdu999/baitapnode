@@ -2,7 +2,7 @@ const itemModel = require('../models/item.model');
 const itemValid = require('../validations/item.valid');
 
 module.exports = {
-  createitem: async (req, res) => {
+  createItem: async (req, res) => {
     const body = req.body;
     const { error, value } = itemValid(body);
     if (error) {
@@ -15,14 +15,14 @@ module.exports = {
 
     return res.status(201).json(item);
   },
-  getitems: async (req, res) => {
+  getItems: async (req, res) => {
     const bodyQuery = {};
 
     const items = await itemModel.find(bodyQuery);
 
     return res.status(200).json(items);
   },
-  updateitem: async (req, res) => {
+  updateItem: async (req, res) => {
     const itemId = req.params.id;
     const body = req.body;
 
@@ -32,7 +32,7 @@ module.exports = {
 
     return res.status(200).json(updateditem);
   },
-  deleteitem: async (req, res) => {
+  deleteItem: async (req, res) => {
     const itemId = req.params.id;
 
     const deleteditem = await itemModel.findOneAndDelete({

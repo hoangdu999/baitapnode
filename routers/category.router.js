@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  createcategory,
-  getcategorys,
-  updatecategory,
-  deletecategory,
+  createCategory,
+  getCategorys,
+  updateCategory,
+  deleteCategory,
 } = require('../controllers/category.controller');
 
 const asyncMiddleware = require('../middlewares/async.middleware');
@@ -17,12 +17,20 @@ router
   .post(
     asyncMiddleware(authMiddleware),
     roleMiddleware(['admin']),
-    asyncMiddleware(createcategory),
+    asyncMiddleware(createCategory),
   )
-  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getcategorys));
+  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getCategorys));
 router
   .route('/')
-  .patch(asyncMiddleware(authMiddleware), asyncMiddleware(updatecategory))
-  .delete(deletecategory);
+  .patch(
+    asyncMiddleware(authMiddleware),
+    roleMiddleware(['admin']),
+    asyncMiddleware(updateCategory),
+  )
+  .delete(
+    asyncMiddleware(authMiddleware),
+    roleMiddleware(['admin']),
+    asyncMiddleware(deleteCategory),
+  );
 
 module.exports = router;

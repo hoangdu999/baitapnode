@@ -3,7 +3,7 @@ const { PER_PAGE } = require('../constants/paging');
 const foodValid = require('../validations/food.valid');
 
 module.exports = {
-  createfood: async (req, res) => {
+  createFood: async (req, res) => {
     const body = req.body;
     const { error, value } = foodValid(body);
     if (error) {
@@ -16,7 +16,7 @@ module.exports = {
 
     return res.status(201).json(food);
   },
-  getfoods: async (req, res) => {
+  getFoods: async (req, res) => {
     const bodyQuery = {};
 
     const name = req.query.name;
@@ -64,7 +64,7 @@ module.exports = {
 
     return res.status(200).json(bodyResponse);
   },
-  updatefood: async (req, res) => {
+  updateFood: async (req, res) => {
     const foodId = req.params.id;
     const body = req.body;
 
@@ -74,7 +74,7 @@ module.exports = {
 
     return res.status(200).json(updatedfood);
   },
-  deletefood: async (req, res) => {
+  deleteFood: async (req, res) => {
     const foodId = req.params.id;
 
     const deletedfood = await foodModel.findOneAndDelete({
