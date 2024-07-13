@@ -5,6 +5,8 @@ const accountModel = require('../models/account.model');
 const bcryptjs = require('bcryptjs');
 const accountValid = require('../validations/account.valid');
 const ErrorResponse = require('../helpers/ErrorResponse');
+const emailSender = require('../helpers/email.sender');
+const getHTMLRegisterConfirm = require('../public/register_confirm');
 
 module.exports = {
   register: async (req, res) => {
@@ -17,7 +19,11 @@ module.exports = {
       });
     }
     const account = await accountModel.create(value);
-
+    emailSender({
+      email: 'hoangdu9s2@gmail.com',
+      subject: 'Tieu de email',
+      html: getHTMLRegisterConfirm({ full_name: body.username, otp: '090100' }),
+    });
     return res.status(201).json(account);
   },
   login: async (req, res) => {
