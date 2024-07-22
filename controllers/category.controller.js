@@ -1,10 +1,12 @@
 const categoryModel = require('../models/category.model');
 const categoryValid = require('../validations/category.valid');
+const cloudinary = require('../configs/cloudinary');
 
 module.exports = {
   createCategory: async (req, res) => {
-    const body = req.body;
-
+    const body = req.body; 
+    const resultUpload = await cloudinary.uploader.upload(req.file.path);
+    
     const { error, value } = categoryValid(body);
     if (error) {
       return res.status(400).json({
@@ -12,6 +14,9 @@ module.exports = {
         message: error.message,
       });
     }
+
+    // value.img = `/images/${req.file.filename}`;
+    value.img = resultUpload.secure_url;
 
     const category = await categoryModel.create(value);
 

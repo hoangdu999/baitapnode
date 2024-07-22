@@ -12,6 +12,9 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
+//images public
+app.use(express.static('./uploads'));
+
 connectDB();
 router(app);
 

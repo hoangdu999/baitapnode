@@ -6,7 +6,6 @@ const categorySchemaValid = Joi.object({
     'string.max': 'k quá 20 ký tự',
     'any.required': 'K đc bỏ trống',
   }),
-  img: Joi.string().required(),
 });
 
 module.exports = (category) => categorySchemaValid.validate(category);
