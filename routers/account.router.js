@@ -6,15 +6,15 @@ const {
   getAccounts,
   updateAccount,
   deleteAccount,
+  exportExcelFile,
 } = require('../controllers/account.controller');
 
 const asyncMiddleware = require('../middlewares/async.middleware');
 const authMiddleware = require('../middlewares/auth.middleware');
 
-router
-  .route('/')
-  .post(createAccount)
-  .get(asyncMiddleware(authMiddleware), asyncMiddleware(getAccounts));
+router.route('/').post(createAccount).get(asyncMiddleware(getAccounts));
+
+router.route('/export-excel-file').get(asyncMiddleware(exportExcelFile));
 
 router
   .route('/')
