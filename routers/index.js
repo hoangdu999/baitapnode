@@ -15,6 +15,9 @@ module.exports = (app) => {
   app.use('/api/items', itemRouter);
   app.use('/api/orders', orderRouter);
   app.use('/api/carts', cartRouter);
+  app.use('/chat', (req, res) => {
+    res.render('login.ejs');
+  });
 
   app.use(errorHandle);
 };
