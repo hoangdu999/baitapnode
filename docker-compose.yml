@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  api:
+    container_name: api-du
+    build: .
+    env_file:
+      - .env 
+    ports:
+      - 2000:5000
+    networks:
+      - du
+  mongo:
+    image: mongo
+    container_name: mongo-du
+    ports:
+      - 27018:27017 
+    networks:
+      - du
+networks:
+  du:
+    name: du-network  

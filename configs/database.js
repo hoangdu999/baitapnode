@@ -4,7 +4,7 @@ const accountModel = require('../models/account.model');
 
 async function connectDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/Example');
+    await mongoose.connect('mongodb://mongo-du:27017/Example');
     console.log('connect DB success');
     const account = await accountModel.findOne({ username: 'admin' });
     if (!account) {
